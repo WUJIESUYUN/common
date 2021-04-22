@@ -1,0 +1,54 @@
+
+server:
+  servlet:
+    context-path: /common
+  port: 8801
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://dev.wujiesuyun.com:3306/wujie_common?characterEncoding=UTF-8
+    username: wujiesuyun
+    password: wujiesuyun$!
+    # 连接池大小根据实际情况调整
+    max-active: 20
+    max-pool-prepared-statement-per-connection-size: 20
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      max-lifetime: 30000
+      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      table-underline: true
+      db-type: mysql
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  mapper-locations: classpath:/mapper/*.xml
+
+
+dubbo:
+  application:
+    name: user-centeraaa
+  registry:
+    protocol: dubbo
+    address: dev.wujiesuyun.com:8675
+    timeout: 10000
+    username: ingAdmin
+    password: 12g7ydiouasp
+  protocol:
+    name: dubbo
+    port: 20880
+  version: 1.0.0
+  scan:
+    base-packages: com.ing.user.center.service
